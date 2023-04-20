@@ -1,0 +1,10 @@
+__*
+/task/
+/third_lib/
+.idea
+.svn
+/py_lib/
+/build
+/chj.egg-info
+/dist
+__pycache__
