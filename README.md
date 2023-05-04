@@ -1,11 +1,12 @@
 
 # 安装记录
-```python
+```bash
 python setup.py clean --all
 python setup.py develop
-pip install --upgrade --force-reinstall <package>
-pip install -I <package>
-pip install --ignore-installed <package>
+pip install --upgrade git+https://username:token@xx.com/username/pychj.git
+#pip install --upgrade --force-reinstall <package>
+#pip install -I <package>
+#pip install --ignore-installed <package>
 ```
 
 # OLD

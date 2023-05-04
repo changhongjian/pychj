@@ -92,7 +92,7 @@ __mp_dtype={
     'int32': 0, 'float32':1, 'int64': 2, 'float64':3, 'bool':4, 'uint8':5
 }
 __mp_dtype_r={
-    0:np.int32, 1:np.float32, 2:np.int64, 3:np.float64, 4:np.bool, 5:np.uint8
+    0:np.int32, 1:np.float32, 2:np.int64, 3:np.float64, 4:bool, 5:np.uint8
 }
 
 # 3-8 多次试验总结出来的    
