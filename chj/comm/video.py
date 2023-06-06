@@ -154,6 +154,7 @@ class Cls_video:
             cmd=f"{cmdbg} -vcodec {vcodec} {aug} {fout}"
         if self.dbg:
             print(cmd)
+        print(cmd)
         os.system(cmd)
 
     # 自动支持h264，但会改变图片大小
@@ -164,6 +165,7 @@ class Cls_video:
         self.cap_out.append_data(img)
 
 def imgs2video(fv, dimgs, fps=1):
+    # movie_py 2.0dev 这里有bug
     import moviepy
     import moviepy.video.io.ImageSequenceClip
     
@@ -193,7 +195,8 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser(description='python -m chj.comm.video --mergev "merge.mp4;$fnm1:$fnm2;2h"')
     parser.add_argument('--showlm', type=str, help='fout;fv;flm;fvtmp')
     parser.add_argument('--merge', type=int, default=1, help='0,1,2')
-    parser.add_argument('--mergev', type=str, help='fout;v1:v2:..;[2h|2v|3h]')
+    parser.add_argument('--only_ldm', type=int, default=0, help='0,1')
+    parser.add_argument('--mergev', type=str, help='fout;v1:v2:..;[h|v|3h]')
     parser.add_argument('--color', type=str, default="0,255,0")
     
     args = parser.parse_args()
@@ -209,6 +212,8 @@ if __name__=="__main__":
             ret, img= cap.read()
             if img is None: break
             if i>=lms.shape[0]: break
+            if args.only_ldm:
+                img[:] = 0
             drawCirclev2(img, lms[i],color=color)
             cls_video.write(img)
         cls_video.close()

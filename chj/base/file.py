@@ -184,7 +184,8 @@ def load_sparse_csr(filename):
 def load_cfg_from_json(fjson):
     return e_dict( load_json(fjson) )
 
-def load_cfg_from_yaml(fyaml):
+def load_cfg_from_yaml(fyaml, nofile_return='ERROR'):
+    if nofile_return != 'ERROR' and not os.path.isfile(fyaml): return nofile_return 
     return e_dict( load_yaml(fyaml) )
 
 def get_nm(fnm, has_path=0): 

@@ -37,9 +37,9 @@ def th2np(e): return e.detach().cpu().numpy()
 def ps(dt): print(dt.shape if hasattr(dt, "shape") else len(dt) )
 def p(*info): print(*info)
 
-def showimg(img,nm="pic",waite=0):
+def showimg(img,nm="pic",wait=0):
     cv2.imshow(nm,img)
-    return cv2.waitKey(waite)
+    return cv2.waitKey(wait)
 def showImg(img,nm="pic",waite=0):
     cv2.imshow(nm,img)
     return cv2.waitKey(waite)
@@ -57,12 +57,16 @@ def drawLine(img, pts, color=(0,255,0), thickness=2, lineType=1):
         ptStart, ptEnd = pts[i], pts[i+1]
         cv.line(img, tuple( ptStart ), tuple( ptEnd ), color, thickness, lineType)
 
-def drawCircle(img,x,y,color=(0,255,0),size=2):
+def drawCircle(img,x,y,color=(0,255,0),size=2,shift=0):
     for id in range(len(x)):
-        cv2.circle(img,(int(x[id]),int(y[id])),1,color, size)
+        if shift==0:
+            cv2.circle(img,(int(x[id]),int(y[id])),1,color, size)
+        else:
+            scale=2**shift
+            cv2.circle(img,(int(x[id]*scale),int(y[id]*scale)),1*scale,color,size,shift=shift)
 
-def drawCirclev2(img,xy,color=(0,255,0),size=2):
-    drawCircle(img, xy[:,0],xy[:,1], color, size)
+def drawCirclev2(img,xy,color=(0,255,0),size=2,shift=0):
+    drawCircle(img, xy[:,0],xy[:,1], color, size,shift)
 
 def drawRect(img,rect,color=(255,0,0)):
     r=[ int(x) for x in rect ]

@@ -39,7 +39,7 @@ def save_obj(fname, vtx, face=None, tex=None, decimals=3, v_fmt=None):
     #num = vtx.shape[0]
     if tex is not None:
         vtx = np.hstack( (vtx, tex) )
-    vtx=np.around(vtx, decimals=decimals).astype(np.str).tolist()
+    vtx=np.around(vtx, decimals=decimals).astype(str).tolist()
     with open(fname, "w") as fp:
         for vec in vtx:
             s = " ".join(vec)
@@ -48,7 +48,7 @@ def save_obj(fname, vtx, face=None, tex=None, decimals=3, v_fmt=None):
 
         if face is None: return
         face=face+1
-        face = face.astype(np.str).tolist()
+        face = face.astype(str).tolist()
         for f in face:
             s = " ".join(f)
             s = f"f {s}\n"
