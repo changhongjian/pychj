@@ -3,7 +3,7 @@ import  cv2 as cv
 import os
 import numpy as np
 import imageio
-
+from chj.base import file as chj_file
 try:
     from moviepy.editor import VideoFileClip
 except:
@@ -207,6 +207,7 @@ if __name__=="__main__":
         lms=np.load(sz[2])
         cap = cv.VideoCapture(sz[1])
         cls_video = Cls_video().init_by_cap(sz[3], cap, fourcc="XVID") 
+        chj_file.mkdir_by_fnm(sz[0])
         n_f=int(cap.get(7))
         for i in tqdm(range(n_f)):
             ret, img= cap.read()
