@@ -16,6 +16,6 @@ def split_train_val_test(dnm, fnm, n_test, n_val,
     
     for nm, dt in zip(nms, dts):
         if issort: dt=sorted(dt)
-        fnm=f"{dnm}{nm}.list"
+        fnm=f"{dnm}/{nm}.list"
         writelines(fnm, dt)
 

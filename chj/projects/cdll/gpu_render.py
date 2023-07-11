@@ -10,7 +10,7 @@ class Cls_UV_render_gpu:
         nF=len(F)
         nb = batch_size
         self.dims=np.array( [nb, nF, tp], np.int32 )
-        self.gpu_dims=np2th_gpu( np.array( [nV, nF, imgw, imgh ], np.int32 ) )
+        self.gpu_dims=np2th_gpu( np.array( [nV, nF, imgh, imgw ], np.int32 ) )
         self.deepmask=np2th_gpu( np.zeros( (nb, imgh, imgw ), np.float32 ) )
         self.xy_Fid=np2th_gpu( np.zeros( (nb, imgh, imgw  ), np.int32 ) )
         self.xy_bc=np2th_gpu( np.zeros( (nb, imgh, imgw , 3 ), np.float32 ) )

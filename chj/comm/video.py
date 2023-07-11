@@ -127,6 +127,7 @@ class Cls_video:
         fcc = infos[-1]
         self.infos = infos
         if fourcc is not None: fcc = fourcc
+        cap_or_f.release()
         #print(fcc)
         return self.init(fvideo, fps=fps, wh=(w, h), fourcc=fcc)
 

@@ -336,10 +336,14 @@ def auto_S(S, wh, rate=0.8, M=None):
     c = (a+b)/2
     d = (b-a).max()
 
-    # get s
-    s = wh * rate / d
-    # get tx, ty according to the center point
-    c_t = np.array([wh, wh]) / 2
+    if type(wh) == int:
+        # get s
+        s = wh * rate / d
+        # get tx, ty according to the center point
+        c_t = np.array([wh, wh]) / 2
+    else:
+        s = min(wh) * rate / d
+        c_t = np.array(wh) / 2
     txy = c_t - s*c
     TS = S * s
     TS[:, :2] += txy #[np.newaxis]
