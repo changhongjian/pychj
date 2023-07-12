@@ -150,7 +150,10 @@ save_pkl=save_pickle
 load_pkl=load_pickle
 
 def load_yaml(fyaml, loader=yaml.FullLoader):
-    with open(fyaml) as fp: return yaml.load(fp.read(), Loader=loader)
+    if os.path.isfile(fyaml):
+        with open(fyaml) as fp: return yaml.load(fp.read(), Loader=loader)
+    else:
+        return yaml.load(fyaml, Loader=loader)
 
 def save_yaml(fp, obj):
     if type(fp) == str: 
@@ -158,8 +161,10 @@ def save_yaml(fp, obj):
     return yaml.dump(obj, fp)
 
 def load_json(fjson):
-    #return json.load(fjson)
-    with open(fjson) as fp: return json.loads(fp.read())
+    if os.path.isfile(fjson):
+        with open(fjson) as fp: return json.loads(fp.read())
+    else:
+        return yaml.load(fjson, Loader=loader)
 
 def save_json(fp, obj, **kargs):
     if type(fp) == str: 
