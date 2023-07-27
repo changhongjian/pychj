@@ -121,13 +121,15 @@ class Cls_video:
     def init_by_cap(self, fvideo, cap_or_f, fourcc=None, verbos=False):
         if isinstance(cap_or_f, str):
             cap_or_f = cv.VideoCapture(cap_or_f)
+            isrelease=True
+        else: isrelease = False
         infos = get_cap_info( cap_or_f )
         if verbos: print("video info:", infos)
         w, h, fps = infos[:3]
         fcc = infos[-1]
         self.infos = infos
         if fourcc is not None: fcc = fourcc
-        cap_or_f.release()
+        if isrelease: cap_or_f.release()
         #print(fcc)
         return self.init(fvideo, fps=fps, wh=(w, h), fourcc=fcc)
 
