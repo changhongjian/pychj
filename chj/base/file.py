@@ -72,6 +72,23 @@ def read_bytes(fp,fmt,nbyte):
     res=struct.unpack(fmt, bytes)
     return res
 
+def edict2dict(cfg): return json.loads(json.dumps(cfg))
+def save_yaml(fnm, data):
+    from ruamel import yaml
+    with open(fnm, 'w') as outfile:
+        yaml.dump(data, outfile, default_flow_style=False, allow_unicode = True, encoding = None)
+def edict_update_adv(a, a_add):
+    for k,v in a_add.items():
+        #print(k, type(v))
+        if type(v)==easydict.EasyDict and k in a:
+            if '__overlap__' in v:
+                del v['__overlap__']
+                a[k] = v
+            else:
+                edict_update_adv(a[k], v)
+        else:
+            a[k] = v
+
 #3-4
 
 def make_temp_dir(fdir):
@@ -197,7 +214,7 @@ def get_nm(fnm, has_path=0):
     if has_path:
         return fnm.rsplit(".", 1)[0]
     else:
-        return fnm.split("/")[-1].split(".")[0]
+        return fnm.rsplit("/",1)[-1].rsplit(".",1)[0]
 
 def save_zip(fzip, arr_nm_file, mode="w"):
     zip_file = zipfile.ZipFile(fzip,mode)
