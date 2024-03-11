@@ -73,10 +73,6 @@ def read_bytes(fp,fmt,nbyte):
     return res
 
 def edict2dict(cfg): return json.loads(json.dumps(cfg))
-def save_yaml(fnm, data):
-    from ruamel import yaml
-    with open(fnm, 'w') as outfile:
-        yaml.dump(data, outfile, default_flow_style=False, allow_unicode = True, encoding = None)
 def edict_update_adv(a, a_add):
     for k,v in a_add.items():
         #print(k, type(v))
@@ -172,16 +168,23 @@ def load_yaml(fyaml, loader=yaml.FullLoader):
     else:
         return yaml.load(fyaml, Loader=loader)
 
-def save_yaml(fp, obj):
+def _save_yaml(fp, obj, tp=1):
+    if tp ==1:
+        from ruamel import yaml
+        return yaml.dump(data, outfile, default_flow_style=False, allow_unicode = True, encoding = None)
+    else:
+        return yaml.dump(obj, _fp)
+
+def save_yaml(fp, obj, tp=1):
     if type(fp) == str: 
-        with open(fp, "w") as _fp: return yaml.dump(obj, _fp)
-    return yaml.dump(obj, fp)
+        with open(fp, "w") as _fp: return _save_yaml(fp,boj,tp) 
+    else: return _save_yaml(fp,boj,tp) 
 
 def load_json(fjson):
     if os.path.isfile(fjson):
         with open(fjson) as fp: return json.loads(fp.read())
     else:
-        return yaml.load(fjson, Loader=loader)
+        return json.loads(fjson)
 
 def save_json(fp, obj, **kargs):
     if type(fp) == str: 
