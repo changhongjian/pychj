@@ -170,8 +170,8 @@ def load_yaml(fyaml, loader=yaml.FullLoader):
 
 def _save_yaml(fp, obj, tp=1):
     if tp ==1:
-        from ruamel import yaml
-        return yaml.dump(obj, fp, default_flow_style=False, allow_unicode = True, encoding = None)
+        from ruamel import ryaml
+        return ryaml.dump(obj, fp, default_flow_style=False, allow_unicode = True, encoding = None)
     else:
         return yaml.dump(obj, fp)
 
