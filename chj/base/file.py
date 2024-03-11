@@ -177,7 +177,7 @@ def _save_yaml(fp, obj, tp=1):
 
 def save_yaml(fp, obj, tp=1):
     if type(fp) == str: 
-        with open(fp, "w") as _fp: return _save_yaml(fp,boj,tp) 
+        with open(fp, "w") as _fp: return _save_yaml(fp,obj,tp) 
     else: return _save_yaml(fp,boj,tp) 
 
 def load_json(fjson):
