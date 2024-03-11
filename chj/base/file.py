@@ -171,9 +171,9 @@ def load_yaml(fyaml, loader=yaml.FullLoader):
 def _save_yaml(fp, obj, tp=1):
     if tp ==1:
         from ruamel import yaml
-        return yaml.dump(obj, _fp, default_flow_style=False, allow_unicode = True, encoding = None)
+        return yaml.dump(obj, fp, default_flow_style=False, allow_unicode = True, encoding = None)
     else:
-        return yaml.dump(obj, _fp)
+        return yaml.dump(obj, fp)
 
 def save_yaml(fp, obj, tp=1):
     if type(fp) == str: 
