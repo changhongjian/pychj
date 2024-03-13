@@ -191,6 +191,32 @@ def save_json(fp, obj, **kargs):
         with open(fp, "w") as _fp: return json.dump(obj, _fp, **kargs)
     return json.dump(obj, fp, **kargs)
 
+def parse_nested_json(json_data):
+    if isinstance(json_data, str):
+        # 如果输入是字符串，则尝试解析为 JSON 对象或数组
+        try:
+            json_data = json.loads(json_data)
+        except json.JSONDecodeError:
+            # 如果解析失败，则返回原始字符串
+            return json_data
+
+    if isinstance(json_data, dict):
+        # 对于 JSON 对象，递归解析每个键值对的值
+        parsed_data = {}
+        for key, value in json_data.items():
+            parsed_data[key] = parse_nested_json(value)
+        return parsed_data
+
+    if isinstance(json_data, list):
+        # 对于 JSON 数组，递归解析每个元素
+        parsed_data = []
+        for item in json_data:
+            parsed_item = parse_nested_json(item)
+            parsed_data.append(parsed_item)
+        return parsed_data
+
+    # 对于其他类型的数据，直接返回
+    return json_data
 
 #4-14
 from scipy.sparse import csr_matrix
