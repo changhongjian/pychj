@@ -232,8 +232,11 @@ def load_sparse_csr(filename):
     return csr_matrix((loader['data'], loader['indices'], loader['indptr']),
                       shape=loader['shape'])
 
-def load_cfg_from_json(fjson):
-    return e_dict( load_json(fjson) )
+def load_cfg_from_json(fjson, addroot=False):
+    if addroot:
+        return e_dict( {'root': load_json(fjson) } )
+    else:
+        return e_dict( load_json(fjson) )
 
 def load_cfg_from_yaml(fyaml, nofile_return='ERROR'):
     if nofile_return != 'ERROR' and not os.path.isfile(fyaml): return nofile_return 
