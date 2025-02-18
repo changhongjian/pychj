@@ -182,7 +182,7 @@ def save_yaml(fp, obj, tp=1):
 
 def load_json(fjson):
     if os.path.isfile(fjson):
-        with open(fjson) as fp: return json.loads(fp.read())
+        with open(fjson) as fp: return json.load(fp)
     else:
         return json.loads(fjson)
 
@@ -239,7 +239,12 @@ def load_cfg_from_json(fjson, addroot=False):
         return e_dict( load_json(fjson) )
 
 def load_cfg_from_yaml(fyaml, nofile_return='ERROR'):
-    if nofile_return != 'ERROR' and not os.path.isfile(fyaml): return nofile_return 
+    if not os.path.isfile(fyaml):
+        if nofile_return != 'ERROR': 
+            return nofile_return 
+        else:
+            print("CHJ_ERR: no such yaml file", fyaml)
+            return None
     return e_dict( load_yaml(fyaml) )
 
 def get_nm(fnm, has_path=0): 

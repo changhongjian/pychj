@@ -59,3 +59,33 @@ def multi_run_apply( func, arr_argvs, n_cores ):
         pool.apply(func, args=tuple(e))
 
 
+def torch_spawn_run( func, arr_argvs, n_cores ):
+    import torch.multiprocessing as mp
+    
+    arr=split_list( arr_argvs, n_cores )
+    mp.spawn(func, args=(arr, n_cores), nprocs=njobs, join=True)
+
+def split_list(input_list, n):
+    avg = len(input_list) // n
+    remainder = len(input_list) % n
+    result = []
+    start = 0
+
+    for i in range(n):
+        if i < remainder:
+            end = start + avg + 1
+        else:
+            end = start + avg
+
+        result.append(input_list[start:end])
+        start = end
+
+    return result
+
+def multi_run_onbatch( process_chunk, data, chunk_size, n_cores ):
+    chunks = [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
+    
+    with Pool(processes=n_cores) as pool:  # 这里使用4个进程，您可以根据需要调整
+        pool.map(process_chunk, chunks)
+
+    

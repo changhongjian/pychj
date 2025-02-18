@@ -4,10 +4,10 @@ import os
 import numpy as np
 import imageio
 from chj.base import file as chj_file
-try:
-    from moviepy.editor import VideoFileClip
-except:
-    pass
+#try:
+#    from moviepy.editor import VideoFileClip
+#except:
+#    pass
 
 def get_video_times(video_path):
     cap = cv.VideoCapture(video_path)
@@ -37,6 +37,7 @@ def get_video_infos(video_path):
     width = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     fps = vid_cap.get(cv2.CAP_PROP_FPS)
     total_frames = int(vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    cap.release()
     return {'height': height, 'width': width, 'fps': fps, 'nframes':total_frames}
 
 class Cls_put_image:
@@ -180,13 +181,23 @@ def imgs2video(fv, dimgs, fps=1):
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(frames_path, fps=fps)
     clip.write_videofile(fv, codec='libx264')
 
-def video2imgs(fv, isbgr=True):
+def video2imgs(fv, isbgr=True, rng=None):
     imgs=[]
     cap = cv.VideoCapture(fv)
+    cnt=0
+    if rng is None:
+        rng = [ 0, 1e8 ]
+    elif type(rng) == int:
+        rng = [ rng, 1e8 ]
+    else:
+        assert len(rng)==2
     while True:
         ret, img = cap.read()
         if img is None: break
-        imgs.append(img if isbgr else np.flip(img, axis=-1))
+        if cnt >=rng[0]:
+            imgs.append(img if isbgr else np.flip(img, axis=-1))
+        cnt+=1
+        if cnt >=rng[1]: break
     return imgs
 
 if __name__=="__main__":
